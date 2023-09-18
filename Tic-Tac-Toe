@@ -1,0 +1,59 @@
+import javax.swing.JOptionPane;
+import java.util.Random;
+
+public class Main {
+    public static void main(String[] args) {
+        String computer;
+        String user;
+
+        do {
+            computer = computerChoice();
+            user = userChoice();
+            JOptionPane.showMessageDialog(null, "Computer chose: " + computer);
+            determineWinner(computer, user);
+        } while (user.equalsIgnoreCase(computer));
+
+        System.exit(0);
+    }
+
+    public static String computerChoice() {
+        Random rand = new Random();
+        int choice = rand.nextInt(3) + 1;
+
+        switch (choice) {
+            case 1:
+                return "rock";
+            case 2:
+                return "paper";
+            case 3:
+                return "scissors";
+            default:
+                return "rock"; // Default to "rock" if something goes wrong.
+        }
+    }
+
+    public static String userChoice() {
+        String userInput;
+        do {
+            userInput = JOptionPane.showInputDialog("Enter your choice (rock, paper, or scissors):");
+        } while (!isValidChoice(userInput));
+
+        return userInput.toLowerCase();
+    }
+
+    public static boolean isValidChoice(String choice) {
+        return choice.equalsIgnoreCase("rock") || choice.equalsIgnoreCase("paper") || choice.equalsIgnoreCase("scissors");
+    }
+
+    public static void determineWinner(String computer, String user) {
+        if (computer.equalsIgnoreCase(user)) {
+            JOptionPane.showMessageDialog(null, "It's a tie!");
+        } else if ((computer.equalsIgnoreCase("rock") && user.equalsIgnoreCase("scissors")) ||
+                   (computer.equalsIgnoreCase("scissors") && user.equalsIgnoreCase("paper")) ||
+                   (computer.equalsIgnoreCase("paper") && user.equalsIgnoreCase("rock"))) {
+            JOptionPane.showMessageDialog(null, "Computer wins!");
+        } else {
+            JOptionPane.showMessageDialog(null, "You win!");
+        }
+    }
+}
